@@ -20,16 +20,23 @@ class SelectionScreen  extends StatelessWidget{
             Text('Choose your path',style: AppTextStyle.heading),
             SizedBox(height: 10,),
             Obx(()=> OutlinedButton(
-              style: AppButtonStyle.outLinedButtonStyle(onpressing: selectionwlcm.isHoveringLogin.value),
+              style: AppButtonStyle.outLinedButtonStyle(onpressing: selectionwlcm.isButtonActive(ActiveButton.Buyer)),
               onPressed: (){
-                selectionwlcm.onHoverLogin();
-              }, child: Text('Iam a Buyer',style: AppTextStyle.heading,))),
+                selectionwlcm.setActiveButton(ActiveButton.Buyer);
+              }, child: Text('Iam a Buyer',style: TextStyle(
+                fontSize: AppTextStyle.heading.fontSize,
+                color: selectionwlcm.isButtonActive(ActiveButton.Buyer) ? Colors.white : AppTextStyle.heading.color
+              ),
+              ))),
               SizedBox(height: 10),
               Obx(()=> OutlinedButton(
-              style: AppButtonStyle.outLinedButtonStyle(onpressing: selectionwlcm.isHoveringSignIn.value),
+              style: AppButtonStyle.outLinedButtonStyle(onpressing: selectionwlcm.isButtonActive(ActiveButton.Seller)),
               onPressed: (){
-                selectionwlcm.onHoverSignIn();
-              }, child: Text('Iam a Seller',style: AppTextStyle.heading,))),
+                selectionwlcm.setActiveButton(ActiveButton.Seller);
+              }, child: Text('Iam a Seller',style: TextStyle(
+                fontSize: AppTextStyle.heading.fontSize,
+                color: selectionwlcm.isButtonActive(ActiveButton.Seller) ? Colors.white : AppTextStyle.heading.color)))
+              ),
           ],
          ),
       )

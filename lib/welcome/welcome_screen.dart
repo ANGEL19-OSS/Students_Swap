@@ -31,9 +31,9 @@ class WelcomeScreen extends StatelessWidget{
               SizedBox(height: 50,),
                 Obx(
                   ()=> OutlinedButton(
-                  style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomeController.isHovering.value),
+                  style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomeController.isButtonActive(ActiveButton.SignIn)),
                      onPressed: (){
-                        _welcomeController.onHover();
+                        _welcomeController.setActiveButton(ActiveButton.SignIn);
                         showModalBottomSheet(
                           isScrollControlled: true,
                           shape: RoundedRectangleBorder(
@@ -48,15 +48,15 @@ class WelcomeScreen extends StatelessWidget{
                      }, child: 
                      Text('Sign Up', textAlign: TextAlign.center,
                      style: TextStyle(fontWeight: AppTextStyle.subheading.fontWeight,
-                     color: _welcomeController.isHovering.value ? Colors.white : AppTextStyle.subheading.color)
+                     color: _welcomeController.isButtonActive(ActiveButton.SignIn) ? Colors.white : AppTextStyle.subheading.color)
                      )),
                 ),
                    SizedBox(height: 10,),
                    Obx(
                      () => OutlinedButton(
-                          style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomeController.isHoveringLogin.value),
+                          style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomeController.isButtonActive(ActiveButton.login)),
                       onPressed: (){
-                          _welcomeController.onHoverLogin();
+                          _welcomeController.setActiveButton(ActiveButton.login);
                           showModalBottomSheet(
                             isScrollControlled: true,
                             shape: RoundedRectangleBorder(
@@ -69,7 +69,7 @@ class WelcomeScreen extends StatelessWidget{
                              builder: (context) => LoginPage());
                       }, 
                       child: Text('Log In', textAlign: TextAlign.center,style: TextStyle(fontWeight: AppTextStyle.subheading.fontWeight
-                      ,color: _welcomeController.isHoveringLogin.value ? Colors.white : AppTextStyle.subheading.color))),
+                      ,color: _welcomeController.isButtonActive(ActiveButton.login) ? Colors.white : AppTextStyle.subheading.color))),
                    )
           ],),
         )

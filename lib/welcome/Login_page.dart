@@ -26,6 +26,7 @@ class LoginPage extends StatelessWidget{
                     borderRadius: BorderRadius.circular(9)),
                    child: TextFormField(
                    decoration: InputDecoration(
+                    border: InputBorder.none,
                      prefixIcon: Icon(Icons.person),
                      labelText: 'Name',
                    ),
@@ -43,6 +44,7 @@ class LoginPage extends StatelessWidget{
                     borderRadius: BorderRadius.circular(9)),
                    child: TextFormField(
                     decoration: InputDecoration(
+                      border: InputBorder.none,
                       prefixIcon: Icon(Icons.lock),
                       labelText: 'Password',
                     ),
@@ -54,14 +56,14 @@ class LoginPage extends StatelessWidget{
                SizedBox(height: 40,),
                 Obx(
                   ()=> OutlinedButton(
-                    style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomeloginController.isHoveringSignIn.value),
+                    style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomeloginController.isButtonActive(ActiveButton.LoginUp)),
                     onPressed: (){
-                      _welcomeloginController.onHoverSignIn();
+                      _welcomeloginController.setActiveButton(ActiveButton.LoginUp);
                       Get.to(() => SelectionScreen());
                     },
                      child: Text('Login',style: TextStyle(
                       fontWeight: AppTextStyle.subheading.fontWeight,
-                      color: _welcomeloginController.isHoveringSignIn.value ? Colors.white : AppTextStyle.subheading.color
+                      color: _welcomeloginController.isButtonActive(ActiveButton.LoginUp)? Colors.white : AppTextStyle.subheading.color
                      ))),
                 )
             ],

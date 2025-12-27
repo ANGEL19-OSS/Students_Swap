@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:studentswap/Profile_screen.dart';
 import 'package:studentswap/utils/App_button_style.dart';
 import 'package:studentswap/utils/App_text_style.dart';
 import 'package:studentswap/welcome/welcome_controller.dart';
@@ -15,7 +16,7 @@ class SignPage extends StatelessWidget{
       heightFactor: 0.6,
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(14.0),
           child: Column(
             children: [
                Container(
@@ -27,6 +28,7 @@ class SignPage extends StatelessWidget{
                     borderRadius: BorderRadius.circular(9)),
                  child: TextFormField(
                   decoration: InputDecoration(
+                      border: InputBorder.none,
                     prefixIcon: Icon(Icons.badge),
                     labelText: 'Student Id',
                   ),
@@ -43,6 +45,7 @@ class SignPage extends StatelessWidget{
                     borderRadius: BorderRadius.circular(9)),
                   child: TextFormField(
                    decoration: InputDecoration(
+                      border: InputBorder.none,
                      prefixIcon: Icon(Icons.person),
                      labelText: 'Name',
                    ),
@@ -59,6 +62,7 @@ class SignPage extends StatelessWidget{
                     borderRadius: BorderRadius.circular(9)),
                  child: TextFormField(
                   decoration: InputDecoration(
+                      border: InputBorder.none,
                     prefixIcon: Icon(Icons.email),
                     labelText: 'Email',
                   ),
@@ -75,6 +79,7 @@ class SignPage extends StatelessWidget{
                     borderRadius: BorderRadius.circular(9)),
                    child: TextFormField(
                     decoration: InputDecoration(
+                        border: InputBorder.none,
                       prefixIcon: Icon(Icons.lock),
                       labelText: 'Password',
                     ),
@@ -86,13 +91,14 @@ class SignPage extends StatelessWidget{
                SizedBox(height: 40,),
                 Obx(
                   ()=> OutlinedButton(
-                    style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomesignController.isHoveringSignUp.value),
+                    style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomesignController.isButtonActive(ActiveButton.SignUp)),
                     onPressed: (){
-                      _welcomesignController.onHoverSignUp();
+                      _welcomesignController.setActiveButton(ActiveButton.SignUp);
+                      Get.to(() => ProfileScreen());
                     },
                      child: Text('Sign Up',style: TextStyle(
                       fontWeight: AppTextStyle.subheading.fontWeight,
-                      color: _welcomesignController.isHoveringSignUp.value ? Colors.white : AppTextStyle.subheading.color
+                      color: _welcomesignController.isButtonActive(ActiveButton.SignUp) ? Colors.white : AppTextStyle.subheading.color
                      ))),
                 )
             ],
