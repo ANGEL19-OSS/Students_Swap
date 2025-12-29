@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:studentswap/utils/App_text_style.dart';
-import 'package:studentswap/welcome/sign_page.dart';
-import '../welcome/Login_page.dart';
+import 'package:studentswap/user_signIn/sign_page.dart';
+import '../user_login/Login_page.dart';
 import 'package:studentswap/welcome/welcome_controller.dart';
 import '../../utils/App_button_style.dart';
 import 'package:get/get.dart';
 class WelcomeScreen extends StatelessWidget{
-    WelcomeScreen({super.key, this.onpressing});
-   final Function()? onpressing;
+    WelcomeScreen({super.key});
    final WelcomeController _welcomeController = Get.put(WelcomeController());
 
    @override
