@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 class ProfileController extends GetxController{
 
   final formkey = GlobalKey<FormState>();
@@ -17,5 +18,14 @@ class ProfileController extends GetxController{
     }
     formkey.currentState!.save();
     return false;
+  }
+  void resetFform(){
+    formkey.currentState!.reset();
+  }
+  void pickImage() async {
+    final pickedimage = await  ImagePicker().pickImage(source: ImageSource.camera,maxWidth: 150,imageQuality: 50);
+    if(pickedimage == null){
+      return;
+    }
   }
 }

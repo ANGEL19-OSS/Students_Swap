@@ -4,10 +4,12 @@ import 'package:studentswap/utils/App_button_style.dart';
 import 'package:studentswap/utils/App_text_style.dart';
 import 'package:studentswap/welcome/welcome_controller.dart';
 import 'package:get/get.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatelessWidget{
   ProfileScreen({super.key});
-  final WelcomeController controllerprof = Get.find<WelcomeController>();
+ final WelcomeController controllerprof = Get.find<WelcomeController>();
   final ProfileController profileController =  Get.put(ProfileController());
   Widget showbox(
   String text,
@@ -62,6 +64,7 @@ class ProfileScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    
     return Scaffold(
       backgroundColor: const Color(0xFF82BEEF),
       body: Center(
@@ -69,24 +72,40 @@ class ProfileScreen extends StatelessWidget{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.grey,
+              foregroundImage: profileController.fileimage != null ? FileImage(File(profileController.fileimage!.path)) : null
+             ),
+             SizedBox(height: 15,),
              Container(
                  width: 100,
                  height: 50,
+                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 borderRadius:BorderRadius.circular(20),
-                color: const Color.fromARGB(255, 189, 216, 238)
+                gradient: const LinearGradient(
+          colors: [
+             Color(0xFF82BEEF),
+             Color(0xFF5FA8E5),
+            ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.15),
+        blurRadius: 8,
+        offset: Offset(0, 4),
+      ),
+    ],
                 ),
-               child: Text('Create Profile',textAlign: TextAlign.center, style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold
-               ),)
-              ,),
+               child:TextButton.icon(onPressed: (){
+                profileController.pickImage();
+               }, label: Icon(Icons.person,color: Colors.white,size: 16,), ),
+              ),
              SizedBox(height: 20,),
-             CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage(''),
-             ),
-             SizedBox(height: 15),
              Form(
               key: profileController.formkey,
                child: Column(
@@ -155,7 +174,7 @@ class ProfileScreen extends StatelessWidget{
              ),
               
               SizedBox(height: 20),
-              ElevatedButton(
+             ElevatedButton(
                 style:
                   AppButtonStyle.outLinedButtonStyle(onpressing: controllerprof.isButtonActive(ActiveButton.Continue)),
                 onPressed: (){

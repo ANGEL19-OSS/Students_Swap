@@ -8,7 +8,7 @@ class LoginController extends GetxController{
   var username = '';
   var password = '';
 
-   bool saveForm() {
+  bool saveForm() {
   final isValid = formkey.currentState?.validate() ?? false;
 
   if (!isValid) return false;

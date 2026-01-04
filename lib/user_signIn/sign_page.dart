@@ -16,24 +16,24 @@ class SignPage extends StatelessWidget{
    final SignController _signcontroller = Get.put(SignController());
     return FractionallySizedBox(
       heightFactor: 0.6,
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: Form(
-            key: _signcontroller.formKey,
-            child: Column(
-              children: [
-                 Container(
-                   width: 350,
-                    height: 50,
-                    decoration: BoxDecoration(
-                     color: const Color(0xFF82BEEF),
-                     shape:  BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(9)),
-                   child: TextFormField(
+      child: Padding(
+        padding: EdgeInsetsGeometry.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Form(
+              key: _signcontroller.formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
-                         contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                      filled: true,
+                      fillColor: Color(0xFF82BEEF),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 16),
                         border: InputBorder.none,
                       prefixIcon: Icon(Icons.badge),
                       hintText: 'Student Id',
@@ -52,18 +52,12 @@ class SignPage extends StatelessWidget{
                     },
                     keyboardType: TextInputType.number,
                    ),
-                 ),
-                 SizedBox(height: 20),
-                  Container(
-                     width: 350,
-                    height: 50,
-                    decoration: BoxDecoration(
-                     color: const Color(0xFF82BEEF),
-                     shape:  BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(9)),
-                    child: TextFormField(
+                   SizedBox(height: 20),
+                    TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                      decoration: InputDecoration(
+                      filled: true,
+                      fillColor: (Color(0xFF82BEEF)),
                        contentPadding: const EdgeInsets.symmetric(vertical: 16),
                         border: InputBorder.none,
                        prefixIcon: Icon(Icons.person),
@@ -83,49 +77,37 @@ class SignPage extends StatelessWidget{
                     },
                      keyboardType: TextInputType.name,
                     ),
-                  ),
-                 SizedBox(height: 20),
-                 Container(
-                    width: 350,
-                    height: 50,
-                    decoration: BoxDecoration(
-                     color: const Color(0xFF82BEEF),
-                     shape:  BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(9)),
-                   child: TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                       contentPadding: const EdgeInsets.symmetric(vertical: 16),
-                        border: InputBorder.none,
-                      prefixIcon: Icon(Icons.email),
-                      hintText: 'Email',
-                    ),
-                    validator: (value){
-                      if(value == null || value.isEmpty){
-                        return 'Please enter your email';
-                      }
-                      if(!value.contains('@')){
-                        return 'Enter valid email';
-                      }
-                      return null;
-                    },
-                    onSaved: (value){
-                      _signcontroller.email = value!;
-                    },
-                    keyboardType: TextInputType.emailAddress,
-                   ),
-                 ),
-                 SizedBox(height: 20),
-                   Container(
-                    width: 350,
-                    height: 50,
-                    decoration: BoxDecoration(
-                     color: const Color(0xFF82BEEF),
-                     shape:  BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(9)),
-                     child: TextFormField(
+                   SizedBox(height: 20),
+                   TextFormField(
+                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xFF82BEEF),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                     border: InputBorder.none,
+                   prefixIcon: Icon(Icons.email),
+                   hintText: 'Email',
+                                         ),
+                                         validator: (value){
+                   if(value == null || value.isEmpty){
+                     return 'Please enter your email';
+                   }
+                   if(!value.contains('@')){
+                     return 'Enter valid email';
+                   }
+                   return null;
+                                         },
+                                         onSaved: (value){
+                   _signcontroller.email = value!;
+                                         },
+                                         keyboardType: TextInputType.emailAddress,
+                                        ),
+                   SizedBox(height: 20),
+                     TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color(0XFF82BEEF),
                           contentPadding: const EdgeInsets.symmetric(vertical: 16),
                           border: InputBorder.none,
                         prefixIcon: Icon(Icons.lock),
@@ -139,31 +121,31 @@ class SignPage extends StatelessWidget{
                         return 'Enter valid password';
                       }
                       return null;
-                    },
-                    onSaved: (value){
+                                           },
+                                           onSaved: (value){
                       _signcontroller.password = value!;
-                    },
+                                           },
                       keyboardType: TextInputType.visiblePassword,
                      ),
-                   ),
-                 
-                  
-                 SizedBox(height: 40,),
-                  Obx(
-                    ()=> OutlinedButton(
-                      style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomesignController.isButtonActive(ActiveButton.SignUp)),
-                      onPressed: (){
-                        if(_signcontroller.SaveSignForm()){
-                        _welcomesignController.setActiveButton(ActiveButton.SignUp);
-                        Get.to(() => ProfileScreen());
-                        }
-                      },
-                       child: Text('Sign Up',style: TextStyle(
-                        fontWeight: AppTextStyle.subheading.fontWeight,
-                        color: _welcomesignController.isButtonActive(ActiveButton.SignUp) ? Colors.white : AppTextStyle.subheading.color
-                       ))),
-                  ) 
-              ],
+                   
+                    
+                   SizedBox(height: 40,),
+                    Obx(
+                      ()=> OutlinedButton(
+                        style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomesignController.isButtonActive(ActiveButton.SignUp)),
+                        onPressed: (){
+                          if(_signcontroller.SaveSignForm()){
+                          _welcomesignController.setActiveButton(ActiveButton.SignUp);
+                          Get.to(() => ProfileScreen());
+                          }
+                        },
+                         child: Text('Sign Up',style: TextStyle(
+                          fontWeight: AppTextStyle.subheading.fontWeight,
+                          color: _welcomesignController.isButtonActive(ActiveButton.SignUp) ? Colors.white : AppTextStyle.subheading.color
+                         ))),
+                    ) 
+                ],
+              ),
             ),
           ),
         ),
