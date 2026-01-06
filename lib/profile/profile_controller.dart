@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 class ProfileController extends GetxController{
 
@@ -9,6 +10,8 @@ class ProfileController extends GetxController{
   var dept_name = '';
   var year = '';
   var ph_no ='';
+  File? fileimage;
+
 
   bool saveform(){
     final isvalid = formkey.currentState?.validate() ??  false;
@@ -27,5 +30,6 @@ class ProfileController extends GetxController{
     if(pickedimage == null){
       return;
     }
+    fileimage = File(pickedimage.path);
   }
 }

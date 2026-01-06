@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1017233537772",
+    "project_id": "studentswap-faae4",
+    "storage_bucket": "studentswap-faae4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017233537772:android:6c14d971d6559ce36ac3c9",
+        "android_client_info": {
+          "package_name": "com.example.studentswap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw4lqIzjoWFJt2JUguCmFVqBz3WD1sSJ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

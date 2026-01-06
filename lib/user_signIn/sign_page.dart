@@ -134,7 +134,7 @@ class SignPage extends StatelessWidget{
                       ()=> OutlinedButton(
                         style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomesignController.isButtonActive(ActiveButton.SignUp)),
                         onPressed: (){
-                          if(_signcontroller.SaveSignForm()){
+                          if(_signcontroller.SignUpUser()!= null){        //expects a bool so checking for null
                           _welcomesignController.setActiveButton(ActiveButton.SignUp);
                           Get.to(() => ProfileScreen());
                           }
