@@ -173,7 +173,7 @@ class ProfileScreen extends StatelessWidget{
                ),
              ),
               
-              SizedBox(height: 20),
+             SizedBox(height: 20),
              ElevatedButton(
                 style:
                   AppButtonStyle.outLinedButtonStyle(onpressing: controllerprof.isButtonActive(ActiveButton.Continue)),

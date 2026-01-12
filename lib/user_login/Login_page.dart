@@ -33,21 +33,21 @@ class LoginPage extends StatelessWidget{
                      border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(vertical: 16),
                       prefixIcon: Icon(Icons.person),
-                      labelText: 'Name',
+                      labelText: 'StudentId',
                     ),
                     validator: (value){
                      if(value == null || value.isEmpty){
-                       return 'Please enter your name';
+                       return 'Please enter your studentId';
                      }
-                     if(value.length < 3){
-                       return 'Name must be at least 3 characters Long';
-                     }
+                      if(value.length < 12){
+                        return 'Enter a valid studentId';
+                      }
                      return null;
                     },
                     onSaved: (value){
-                      _loginController.username = value!;
+                      _loginController.userId = value!;
                     },
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.number,
                                           
                                           ),
                   
@@ -83,8 +83,8 @@ class LoginPage extends StatelessWidget{
                     Obx(
                       ()=> OutlinedButton(
                         style: AppButtonStyle.outLinedButtonStyle(onpressing: _welcomeloginController.isButtonActive(ActiveButton.LoginUp)),
-                        onPressed: (){
-                         if( _loginController.saveForm()){
+                        onPressed: ()async{
+                         if( await _loginController.loginUser()){
                           _welcomeloginController.setActiveButton(ActiveButton.LoginUp);
                           Get.to(() => SelectionScreen());
                          }
