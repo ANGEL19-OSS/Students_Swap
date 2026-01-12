@@ -30,11 +30,6 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
-    buildscript {
-    dependencies {
-        classpath("com.google.gms:google-services:4.4.0")
-    }
-}
 
     buildTypes {
         release {
