@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentswap/profile/profile_controller.dart';
+import 'package:studentswap/selection_screen.dart';
 import 'package:studentswap/utils/App_button_style.dart';
 import 'package:studentswap/utils/App_text_style.dart';
 import 'package:studentswap/welcome/welcome_controller.dart';
@@ -177,9 +178,10 @@ class ProfileScreen extends StatelessWidget{
              ElevatedButton(
                 style:
                   AppButtonStyle.outLinedButtonStyle(onpressing: controllerprof.isButtonActive(ActiveButton.Continue)),
-                onPressed: (){
-                  if(profileController.saveform()){
+                onPressed: () async{
+                  if(await profileController.profileform()){
                  controllerprof.setActiveButton(ActiveButton.Continue);
+                 Get.to(() => SelectionScreen());
                   }
                
                 }, 

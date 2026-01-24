@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studentswap/seller/sellerview.dart';
 import 'package:studentswap/utils/App_button_style.dart';
 import 'package:studentswap/utils/App_text_style.dart';
 import 'package:get/get.dart';
@@ -33,6 +34,7 @@ class SelectionScreen  extends StatelessWidget{
               style: AppButtonStyle.outLinedButtonStyle(onpressing: selectionwlcm.isButtonActive(ActiveButton.Seller)),
               onPressed: (){
                 selectionwlcm.setActiveButton(ActiveButton.Seller);
+                Get.to(() => Sellerview());
               }, child: Text('Iam a Seller',style: TextStyle(
                 fontSize: AppTextStyle.heading.fontSize,
                 color: selectionwlcm.isButtonActive(ActiveButton.Seller) ? Colors.white : AppTextStyle.heading.color)))

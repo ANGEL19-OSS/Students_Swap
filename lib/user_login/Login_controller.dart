@@ -38,8 +38,9 @@ class LoginController extends GetxController{
       return false;
     }
     try{
-      userId = userId.trim().toUpperCase();
+      userId = userId.trim();
       final mail = await getemailwithregisterno(userId);
+      print( mail);
       if(mail == null){
         return false;
       }
@@ -47,10 +48,13 @@ class LoginController extends GetxController{
       await _firebase.signInWithEmailAndPassword(
         email: mail, 
         password: password);
+        print("successfull");
         return true;
     } on FirebaseAuthException catch (error){
+      print('login failed $error');
+      
         if(error.code == 'user-not-found'){
-          Get.snackbar('Error', 'User not found');
+          Get.snackbar('Error', 'User not found',);
         }else if(error.code == 'wrong-password'){
           Get.snackbar('Error', 'Password is wrong');
         }

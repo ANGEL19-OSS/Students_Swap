@@ -86,7 +86,9 @@ class LoginPage extends StatelessWidget{
                         onPressed: ()async{
                          if( await _loginController.loginUser()){
                           _welcomeloginController.setActiveButton(ActiveButton.LoginUp);
-                          Get.to(() => SelectionScreen());
+                          print('yepp');
+                          Get.back();
+                          Get.off(() => SelectionScreen());
                          }
                         },
                          child: Text('Login',style: TextStyle(
