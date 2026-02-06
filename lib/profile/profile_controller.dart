@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io';
@@ -29,8 +30,9 @@ class ProfileController extends GetxController{
      if(!isValid){
       return false;
      }
+     final uid = FirebaseAuth.instance.currentUser!.uid;
      try{
-      await firebase.collection('profile').doc().set(
+      await firebase.collection('profile').doc(uid).set(
         {
           'room_no' : room_no,
           'dept_name' : dept_name,

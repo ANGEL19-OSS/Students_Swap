@@ -143,8 +143,8 @@ class SignPage extends StatelessWidget{
                           fontWeight: AppTextStyle.subheading.fontWeight,
                           color: _welcomesignController.isButtonActive(ActiveButton.SignUp) ? Colors.white : AppTextStyle.subheading.color
                          ))),
-                    ) 
-                ],
+                     ) 
+                  ],
               ),
             ),
           ),

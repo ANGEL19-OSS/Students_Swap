@@ -10,6 +10,7 @@ enum ActiveButton{
   Buyer,
   Seller,
   Continue,
+  Addproduct,
 }
 
 class WelcomeController extends GetxController{

@@ -66,7 +66,7 @@ class Sellerview extends StatelessWidget{
                 const Profile(),
               ],
             ),
-          )
+           )
           )
         ],
       ),
