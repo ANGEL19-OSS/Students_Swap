@@ -21,13 +21,16 @@ class SellerController  extends GetxController{
   var products = <Product>[].obs;      //declaring a reactive list 
 
 late Profile profile;                 //declaring here use later
+Userdata? user;
   String? pickedprofimg;
+
 
   final formkey = GlobalKey<FormState>();
   void onInit(){
     super.onInit();
     fetchproducts();
     fetchuserprofile();
+    fetchuser();
   }
   void setTab(int idx){
     selectedTab.value = idx;
@@ -138,6 +141,44 @@ late Profile profile;                 //declaring here use later
   void changeprofile() async{
    var image =  await ImagePicker().pickImage(source: ImageSource.camera,imageQuality: 50,); 
    pickedprofimg =  image!.path;
+   }
+
+
+   Future<void> fetchuser()async{
+    try{
+      final snapshot= await _firebase.collection('users').doc(uid).get();
+       if(snapshot.exists){
+        user = Userdata.fromDoc(snapshot);
+       }
+       print('user fetched');
+    }catch(e){
+      print('failed to fetch user');
+    }
+   }
+
+   Future<void> UpdateProfile(String username , String studentId,String phone,String year,
+    String room_no,String image, String dept_name
+    )async{
+      try{
+          _firebase.collection('users').doc(uid).update({
+            'name' : username,
+            'studentId' : studentId
+          });
+      }catch(e){
+        print('update..proff');
+      }
+      try{
+        _firebase.collection('profile').doc(uid).update({
+          'image' : image,
+          'ph_no' : phone,
+          'room_no' : room_no,
+          'year' : year,
+          'dept_name' : dept_name
+          
+        });
+      }catch(e){
+
+      }
    }
 
 }

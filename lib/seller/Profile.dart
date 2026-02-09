@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studentswap/seller/seller_controller.dart';
+import 'package:studentswap/widgets/editprofiledialog.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -77,7 +78,11 @@ class Profile extends StatelessWidget {
             icon: Icons.person,
             title: "Personal Details",
             onTap: () {
-              // Navigate to edit details
+              print('dialog eee');
+               showDialog(
+                context: context, builder: (context) =>
+                   EditProfileDialog()
+                );
             },
           ),
 
