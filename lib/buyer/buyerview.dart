@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:studentswap/buyer/buyer_controller.dart';
+import 'package:studentswap/buyer/item_details_screen.dart';
 import 'package:studentswap/seller/seller_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class Buyerview extends StatelessWidget{
         }),
       ),
    body: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+     crossAxisAlignment: CrossAxisAlignment.start,
      children: [
        SizedBox(
         height: 200,
@@ -46,8 +47,8 @@ class Buyerview extends StatelessWidget{
           padEnds: false,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ClipRRect(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
                   controller.images[index],
@@ -80,6 +81,9 @@ class Buyerview extends StatelessWidget{
               ),
             )
           : GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+
               padding: const EdgeInsets.all(16),
               itemCount: controller.allproducts.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -89,82 +93,96 @@ class Buyerview extends StatelessWidget{
                 childAspectRatio: 0.75,
               ),
               itemBuilder: (context, index) {
+
                 final prd = controller.allproducts[index];
+                  print("Image path: ${prd.prod_images[0]}");
 
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
-                        blurRadius: 6,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      // 🔹 Product Image
-                      Expanded(
-                        flex: 6,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              prd.prod_images.isNotEmpty
-                                  ? prd.prod_images[0]
-                                  : 'https://via.placeholder.com/150',
-                              fit: BoxFit.cover,
-                              width: double.infinity,
+                return GestureDetector(
+                  onTap: () {
+                    Get.to(() => ItemDetailsScreen(
+                      product: prd,
+                    ));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.08),
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                  
+                        // 🔹 Product Image
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              
+                              child: Image.file(                  //if data/0/  local path and not http path                           
+                                     File(prd.prod_images[0]),                               
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                
+                                 errorBuilder: (context, error, stackTrace) {
+                              return 
+                               const Icon(Icons.broken_image);
+                              
+                               },
+                              ),
                             ),
                           ),
                         ),
-                      ),
-
-                      // 🔹 Product Details
-                      Expanded(
-                        flex: 4,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-
-                              Text(
-                                prd.productname,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
+                        Expanded(
+                          flex: 4,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                  
+                                Text(
+                                  prd.productname,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14
+                                  ),
                                 ),
-                              ),
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '₹${prd.price}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.green[700],
+                  
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '₹${prd.price}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green[700],
+                                        fontSize: 14,
+                                      ),
                                     ),
-                                  ),
-                                  Icon(
-                                    Icons.add_shopping_cart,
-                                    color: Colors.blue,
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    Icon(
+                                      Icons.add_shopping_cart,
+                                      color: Colors.blue,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },

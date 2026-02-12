@@ -27,7 +27,7 @@ class Product {
       price: doc['price'],
       condition: doc['condition'],
       sellerNumber: doc['sellerNumber'],
-      prod_images: List.from(doc['prod_images']),
+      prod_images: List<String>.from(doc['prod_images']),
       sellerId: doc['sellerId']
     );
   }
