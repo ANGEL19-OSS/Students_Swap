@@ -13,15 +13,15 @@ class EditProfileDialog extends StatelessWidget {
     final nameCtrl =
         TextEditingController(text: controller.user?.username ?? '');
     final phoneCtrl =
-        TextEditingController(text: controller.profile.ph_no);
+        TextEditingController(text: controller.profile?.ph_no ?? '');
     final studentIdCtrl =
         TextEditingController(text: controller.user?.studentId ?? '');
     final yearCtrl =
-        TextEditingController(text: controller.profile.year);
+        TextEditingController(text: controller.profile?.year?? '');
     final roomNoCtrl =
-        TextEditingController(text: controller.profile.room_no);
+        TextEditingController(text: controller.profile?.room_no?? '');
     final deptCtrl =
-        TextEditingController(text: controller.profile.dept_name);
+        TextEditingController(text: controller.profile?.dept_name?? '');
 
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -102,22 +102,44 @@ class EditProfileDialog extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        final imagePath =
-                            controller.pickedprofimg ??
-                            controller.profile.image;
-    
-                        controller.UpdateProfile(
-                          nameCtrl.text.trim(),
-                          studentIdCtrl.text.trim(),
-                          phoneCtrl.text.trim(),
-                          roomNoCtrl.text.trim(),
-                          yearCtrl.text.trim(),
-                          deptCtrl.text.trim(),
-                          imagePath,
-                        );
-                        Get.back();
-                      },
+                     onPressed: () {
+  final profile = controller.profile;
+
+  final imagePath =
+      controller.pickedprofimg ??
+      profile?.image ??
+      '';
+
+  controller.UpdateProfile(
+    nameCtrl.text.trim().isNotEmpty
+        ? nameCtrl.text.trim()
+        : controller.user?.username ?? '',          //if altered update that or old data if null then empty '' ;
+
+    studentIdCtrl.text.trim().isNotEmpty
+        ? studentIdCtrl.text.trim()
+        : controller.user?.studentId ?? '',
+
+    phoneCtrl.text.trim().isNotEmpty
+        ? phoneCtrl.text.trim()
+        : profile?.ph_no ?? '',
+
+    roomNoCtrl.text.trim().isNotEmpty
+        ? roomNoCtrl.text.trim()
+        : profile?.room_no ?? '',
+
+    yearCtrl.text.trim().isNotEmpty
+        ? yearCtrl.text.trim()
+        : profile?.year ?? '',
+
+    deptCtrl.text.trim().isNotEmpty
+        ? deptCtrl.text.trim()
+        : profile?.dept_name ?? '',
+
+    imagePath,
+  );
+
+  Get.back();
+},
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(

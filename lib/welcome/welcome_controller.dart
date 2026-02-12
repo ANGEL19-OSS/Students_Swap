@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import  'package:studentswap/selection_screen.dart';
+import 'package:studentswap/welcome/welcome_screen.dart';
 
 enum ActiveButton{
   none,
@@ -14,6 +17,7 @@ enum ActiveButton{
 }
 
 class WelcomeController extends GetxController{
+    final box = GetStorage();
       Rx<ActiveButton> activeButton = ActiveButton.none.obs;
     
       Rx<Color> bg_color = Colors.white.obs;    // var bg_color = Colors.white.obs does the same
@@ -31,4 +35,9 @@ class WelcomeController extends GetxController{
      bool isButtonActive(ActiveButton button){          //checker 
       return activeButton.value == button;
      }
+
+     Widget getInitialScreen() {
+     bool isLoggedIn = box.read('isLoggedIn') ?? false;
+    return isLoggedIn ? SelectionScreen() : WelcomeScreen();
+    }
 }

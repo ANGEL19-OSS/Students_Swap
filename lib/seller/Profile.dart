@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studentswap/seller/seller_controller.dart';
+import 'package:studentswap/user_login/Login_controller.dart';
 import 'package:studentswap/widgets/editprofiledialog.dart';
 
 class Profile extends StatelessWidget {
@@ -11,7 +12,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SellerController controller = Get.find<SellerController>();
-
+    final LoginController controller1 = Get.find<LoginController>();
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -25,7 +26,7 @@ class Profile extends StatelessWidget {
                   builder: (_) => AlertDialog(
                     title: const Text('Change profile'),
                     content: const Text(
-                        'Do you want to change or remove profile picture?'),
+                        'Do you want to change profile picture?'),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -38,6 +39,7 @@ class Profile extends StatelessWidget {
                         onPressed: () {
                           controller.isSetImage.value = true;
                           controller.changeprofile();
+                          
                           Get.back();
                         },
                         child: const Text('Change'),
@@ -54,9 +56,9 @@ class Profile extends StatelessWidget {
                       controller.pickedprofimg != null) {
                     imageProvider =
                         FileImage(File(controller.pickedprofimg!));
-                  } else if (controller.profile.image.isNotEmpty) {
+                  } else if (controller.profile != null && controller.profile!.image.isNotEmpty) {
                     imageProvider =
-                        FileImage(File(controller.profile.image));
+                        FileImage(File(controller.profile!.image));
                   }
 
                   return CircleAvatar(
@@ -120,7 +122,22 @@ class Profile extends StatelessWidget {
                 style: TextStyle(color: Colors.red),
               ),
               onTap: () {
-                // Logout logic
+                showDialog(context: context, builder: (context){
+                  return AlertDialog(
+                    title: Text('Log-Out'),
+                    content: Text('Do you reallyy want to log out '),
+                    actions: [
+                      TextButton(onPressed: (){
+                        Get.back();
+                      }, child: Text('Cancel')),
+                      SizedBox(width: 5,),
+                      TextButton(onPressed: (){
+                       controller1.logout();
+                      }, child: Text('Confirm'))
+                    ],
+                  );
+                });
+                
               },
             ),
           ),

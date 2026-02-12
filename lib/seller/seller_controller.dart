@@ -5,7 +5,9 @@ import 'package:get/state_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-import 'package:studentswap/seller/ProductModel.dart';
+import 'package:studentswap/models/ProductModel.dart';
+import '../models/userdatamodel.dart';
+import '../models/ProfileModel.dart';
 
 class SellerController  extends GetxController{
   final _firebase = FirebaseFirestore.instance;
@@ -20,7 +22,7 @@ class SellerController  extends GetxController{
 
   var products = <Product>[].obs;      //declaring a reactive list 
 
-late Profile profile;                 //declaring here use later
+ Profile? profile;                 //declaring here use later
 Userdata? user;
   String? pickedprofimg;
 
@@ -156,8 +158,8 @@ Userdata? user;
     }
    }
 
-   Future<void> UpdateProfile(String username , String studentId,String phone,String year,
-    String room_no,String image, String dept_name
+   Future<void> UpdateProfile(String username , String studentId,String phone,String room_no,
+    String year ,String dept_name, String image
     )async{
       try{
           _firebase.collection('users').doc(uid).update({

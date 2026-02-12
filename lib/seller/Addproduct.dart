@@ -142,7 +142,7 @@ class Addproduct extends StatelessWidget{
             );
           },
         );
-          },
+      },
                     child: Image.file(
                       imgs[index],
                       width: 100,

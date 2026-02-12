@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:studentswap/user_login/Login_page.dart';
+import 'package:studentswap/welcome/welcome_screen.dart';
 
 class LoginController extends GetxController{
 
@@ -11,6 +14,10 @@ class LoginController extends GetxController{
   
   var userId = '';
   var password = '';
+
+  final box = GetStorage();
+
+  
 
   bool saveForm() {
   final isValid = formkey.currentState?.validate() ?? false;
@@ -49,6 +56,7 @@ class LoginController extends GetxController{
         email: mail, 
         password: password);
         print("successfull");
+        onLoginSucess(userId);
         return true;
     } on FirebaseAuthException catch (error){
       print('login failed $error');
@@ -61,6 +69,17 @@ class LoginController extends GetxController{
         return false;
     }
    }
+
+   void onLoginSucess(String userId){
+    box.write('isLoggedIn', true);
+    box.write('userId', userId);
+   }
+
+   void logout() {
+   box.erase(); // or box.remove('isLoggedIn');
+   Get.offAll(WelcomeScreen());
+}
+
 
   void resetForm() {
     formkey.currentState!.reset();

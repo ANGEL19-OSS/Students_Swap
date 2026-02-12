@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studentswap/buyer/buyerview.dart';
 import 'package:studentswap/seller/sellerview.dart';
 import 'package:studentswap/utils/App_button_style.dart';
 import 'package:studentswap/utils/App_text_style.dart';
@@ -16,14 +17,16 @@ class SelectionScreen  extends StatelessWidget{
          child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/assets/Selection_bg.png'),
+            Image.asset('assets/assets/Selection_bg.gif',
+            ),
             SizedBox(height: 20,),
-            Text('Choose your path',style: AppTextStyle.heading),
+            Text('Choose your role',style: AppTextStyle.heading),
             SizedBox(height: 10,),
             Obx(()=> OutlinedButton(
               style: AppButtonStyle.outLinedButtonStyle(onpressing: selectionwlcm.isButtonActive(ActiveButton.Buyer)),
               onPressed: (){
                 selectionwlcm.setActiveButton(ActiveButton.Buyer);
+                Get.to(() => Buyerview());
               }, child: Text('Iam a Buyer',style: TextStyle(
                 fontSize: AppTextStyle.heading.fontSize,
                 color: selectionwlcm.isButtonActive(ActiveButton.Buyer) ? Colors.white : AppTextStyle.heading.color

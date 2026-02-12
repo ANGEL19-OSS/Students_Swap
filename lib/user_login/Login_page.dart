@@ -87,8 +87,8 @@ class LoginPage extends StatelessWidget{
                          if( await _loginController.loginUser()){
                           _welcomeloginController.setActiveButton(ActiveButton.LoginUp);
                           print('yepp');
-                          Get.back();
-                          Get.off(() => SelectionScreen());
+                         
+                          Get.offAll(() => SelectionScreen());
                          }
                         },
                          child: Text('Login',style: TextStyle(
