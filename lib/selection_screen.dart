@@ -5,6 +5,7 @@ import 'package:studentswap/utils/App_button_style.dart';
 import 'package:studentswap/utils/App_text_style.dart';
 import 'package:get/get.dart';
 import 'package:studentswap/welcome/welcome_controller.dart';
+import 'package:studentswap/widgets/bottomnavbuyer.dart';
 
 class SelectionScreen  extends StatelessWidget{
   const SelectionScreen({super.key});
@@ -26,7 +27,7 @@ class SelectionScreen  extends StatelessWidget{
               style: AppButtonStyle.outLinedButtonStyle(onpressing: selectionwlcm.isButtonActive(ActiveButton.Buyer)),
               onPressed: (){
                 selectionwlcm.setActiveButton(ActiveButton.Buyer);
-                Get.to(() => Buyerview());
+                Get.to(() => Bottomnavbuyer());
               }, child: Text('Iam a Buyer',style: TextStyle(
                 fontSize: AppTextStyle.heading.fontSize,
                 color: selectionwlcm.isButtonActive(ActiveButton.Buyer) ? Colors.white : AppTextStyle.heading.color

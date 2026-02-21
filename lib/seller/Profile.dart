@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:studentswap/seller/seller_controller.dart';
 import 'package:studentswap/user_login/Login_controller.dart';
 import 'package:studentswap/widgets/editprofiledialog.dart';
+import '../buyer/buyer_controller.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -13,139 +14,143 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     final SellerController controller = Get.find<SellerController>();
     final LoginController controller1 = Get.find<LoginController>();
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: Colors.white,
-            child: GestureDetector(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (_) => AlertDialog(
-                    title: const Text('Change profile'),
-                    content: const Text(
-                        'Do you want to change profile picture?'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          controller.isSetImage.value = false;
-                          Get.back();
-                        },
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          controller.isSetImage.value = true;
-                          controller.changeprofile();
-                          
-                          Get.back();
-                        },
-                        child: const Text('Change'),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              child: Center(
-                child: Obx(() {
-                  ImageProvider? imageProvider;
-
-                  if (controller.isSetImage.value &&
-                      controller.pickedprofimg != null) {
-                    imageProvider =
-                        FileImage(File(controller.pickedprofimg!));
-                  } else if (controller.profile != null && controller.profile!.image.isNotEmpty) {
-                    imageProvider =
-                        FileImage(File(controller.profile!.image));
-                  }
-
-                  return CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.grey.shade300,
-                    backgroundImage: imageProvider,
-                    child: imageProvider == null
-                        ? const Icon(Icons.person, size: 45)
-                        : null,
+    final BuyerController controller2 = Get.find<BuyerController>();
+    return
+      SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              color: Colors.white,
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                      title: const Text('Change profile'),
+                      content: const Text(
+                          'Do you want to change profile picture?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            controller.isSetImage.value = false;
+                            Get.back();
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            controller.isSetImage.value = true;
+                            controller.changeprofile();
+                            
+                            Get.back();
+                          },
+                          child: const Text('Change'),
+                        ),
+                      ],
+                    ),
                   );
-                }),
+                },
+                child: Center(
+                  child: Obx(() {
+                    ImageProvider? imageProvider;
+      
+                    if (controller.isSetImage.value &&
+                        controller.pickedprofimg != null) {
+                      imageProvider =
+                          FileImage(File(controller.pickedprofimg!));
+                    } else if (controller.profile != null && controller.profile!.image!.isNotEmpty) {
+                      imageProvider =
+                          FileImage(File(controller.profile!
+                          .image!));
+                    }
+      
+                    return CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.grey.shade300,
+                      backgroundImage: imageProvider,
+                      child: imageProvider == null
+                          ? const Icon(Icons.person, size: 45)
+                          : null,
+                    );
+                  }),
+                ),
               ),
             ),
-          ),
-
-          const SizedBox(height: 8),
-
-          _profileCard(
-            icon: Icons.person,
-            title: "Personal Details",
-            onTap: () {
-              print('dialog eee');
-               showDialog(
-                context: context, builder: (context) =>
-                   EditProfileDialog()
-                );
-            },
-          ),
-
-          Obx(() => _profileCard(
-                icon: Icons.inventory,
-                title: "My Listings",
-                trailing: Text(
-                  controller.products.length.toString(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16),
+      
+            const SizedBox(height: 8),
+      
+            _profileCard(
+              icon: Icons.person,
+              title: "Personal Details",
+              onTap: () {
+                print('dialog eee');
+                 showDialog(
+                  context: context, builder: (context) =>
+                     EditProfileDialog()
+                  );
+              },
+            ),
+      
+            Obx(() => _profileCard(
+                  icon: Icons.inventory,
+                  title: "My Listings",
+                  trailing: Text(
+                    controller.products.length.toString(),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  onTap: () {
+                    // Navigate to listings screen
+                  },
+                )),
+            _profileCard(
+              icon: Icons.star,
+              title: "Ratings",
+              trailing:
+                  const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {},
+            ),
+      
+            const SizedBox(height: 12),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                color: Colors.red.shade50,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text(
+                  "Logout",
+                  style: TextStyle(color: Colors.red),
                 ),
                 onTap: () {
-                  // Navigate to listings screen
+                  showDialog(context: context, builder: (context){
+                    return AlertDialog(
+                      title: Text('Log-Out'),
+                      content: Text('Do you reallyy want to log out '),
+                      actions: [
+                        TextButton(onPressed: (){
+                          Get.back();
+                        }, child: Text('Cancel')),
+                        SizedBox(width: 5,),
+                        TextButton(onPressed: (){
+                         controller1.logout();
+                        }, child: Text('Confirm'))
+                      ],
+                    );
+                  });
+                  
                 },
-              )),
-          _profileCard(
-            icon: Icons.star,
-            title: "Ratings",
-            trailing:
-                const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () {},
-          ),
-
-          const SizedBox(height: 12),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12),
-            decoration: BoxDecoration(
-              color: Colors.red.shade50,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              leading: const Icon(Icons.logout, color: Colors.red),
-              title: const Text(
-                "Logout",
-                style: TextStyle(color: Colors.red),
               ),
-              onTap: () {
-                showDialog(context: context, builder: (context){
-                  return AlertDialog(
-                    title: Text('Log-Out'),
-                    content: Text('Do you reallyy want to log out '),
-                    actions: [
-                      TextButton(onPressed: (){
-                        Get.back();
-                      }, child: Text('Cancel')),
-                      SizedBox(width: 5,),
-                      TextButton(onPressed: (){
-                       controller1.logout();
-                      }, child: Text('Confirm'))
-                    ],
-                  );
-                });
-                
-              },
             ),
-          ),
-
-          const SizedBox(height: 20),
-        ],
-      ),
-    );
+      
+            const SizedBox(height: 20),
+          ],
+        ),
+      );
+    
   }
   Widget _profileCard({
     required IconData icon,
@@ -173,5 +178,6 @@ class Profile extends StatelessWidget {
         onTap: onTap,
       ),
     );
+    
   }
 }

@@ -6,6 +6,7 @@ import 'package:studentswap/buyer/buyer_controller.dart';
 import 'package:studentswap/buyer/item_details_screen.dart';
 import 'package:studentswap/seller/seller_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../seller/Profile.dart';
 import 'package:get/get.dart';
 
 class Buyerview extends StatelessWidget{
@@ -32,6 +33,12 @@ class Buyerview extends StatelessWidget{
               return  Text("Welcome, ${snapshot.data}");
             }
         }),
+        actions: [
+          IconButton(onPressed: (){
+            controller.isScaffold.value = true;
+            const Profile();
+          }, icon: Icon(Icons.person))
+        ],
       ),
    body: Column(
      crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,21 +76,14 @@ class Buyerview extends StatelessWidget{
          ),
        ),
       const SizedBox(height: 10,),             
-    Expanded(
+      Expanded(
       child: controller.allproducts.isEmpty
           ? Center(
-              child: Text(
-                'Oh Oh none products Available',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                ),
-              ),
+            child: CircularProgressIndicator(),
             )
           : GridView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-
+            physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(16),
               itemCount: controller.allproducts.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -96,12 +96,20 @@ class Buyerview extends StatelessWidget{
 
                 final prd = controller.allproducts[index];
                   print("Image path: ${prd.prod_images[0]}");
+                  final alreadyInCart =
+                  controller.cartproducts.any((item) => item.id == prd.id);
 
                 return GestureDetector(
                   onTap: () {
-                    Get.to(() => ItemDetailsScreen(
-                      product: prd,
-                    ));
+                    Get.to(
+                  () => ItemDetailsScreen(product: prd),
+                     binding: BindingsBuilder(() {
+                     final controller = Get.put(BuyerController());
+                     controller.fetchProductProfile(prd.sellerId);
+                     controller.fetchusername(prd.sellerId);
+                  }),
+                );
+
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -147,19 +155,35 @@ class Buyerview extends StatelessWidget{
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                  
-                                Text(
-                                  prd.productname,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14
-                                  ),
+                              children: [                    
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      prd.productname,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                        '4.0',
+                                        style: TextStyle(
+                                         fontSize: width * 0.032,
+                                          color: const Color.fromARGB(255, 247, 181, 14),
+                                          fontWeight: FontWeight.w500,
+                                         ),
+                                          ),
+                                        Icon(Icons.star, color:const Color.fromARGB(255, 247, 181, 14) ,)                                             , 
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                  
+                                             
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -171,10 +195,25 @@ class Buyerview extends StatelessWidget{
                                         fontSize: 14,
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.add_shopping_cart,
-                                      color: Colors.blue,
-                                    ),
+                                    ElevatedButton                                   
+                                      ( 
+                                      style:ElevatedButton.styleFrom(
+                                        backgroundColor: Color.fromARGB(255, 88, 193, 241),
+                                        foregroundColor: Colors.white,
+                                       // minimumSize: Size(10, 15),
+                                         shape: RoundedRectangleBorder(
+                                             borderRadius:
+                                      BorderRadius.circular(width * 0.03),                             
+                                        ),
+                                      ) ,
+                                      onPressed: 
+                                    (){ 
+                                      if(!alreadyInCart) {   
+                                      _showSnackbar(context, 'Adding to cart...');}  
+                                      controller.Addtocart(prd.id, prd.productname, prd.price, prd.sellerId, prd.sellerNumber, prd.prod_images[0]);
+                                      controller.addedtocart.value = true;
+                                      
+                                    }, child: Icon(Icons.shopping_cart))
                                   ],
                                 ),
                               ],
@@ -194,6 +233,50 @@ class Buyerview extends StatelessWidget{
    
 
     
+  }
+  
+      void _showSnackbar(BuildContext context ,String message) {      //moved the method out build
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: MediaQuery.of(context).size.height * 0.45, // center vertically
+        left: 40,
+        right: 40,
+        child: Material(
+          color: Colors.transparent,
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1779A9),
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  )
+                ],
+              ),
+              child: Text(
+                message,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+    Future.delayed(const Duration(seconds: 1), () {
+      overlayEntry.remove();
+    });
   }
 
 }

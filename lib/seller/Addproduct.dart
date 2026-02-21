@@ -228,14 +228,16 @@ class Addproduct extends StatelessWidget{
                         },
                       ),
                       SizedBox(height: 16,),
-                      Text('Condition',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),textAlign: TextAlign.start),
+                      Text('Description',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),textAlign: TextAlign.start),
                         SizedBox(height: 5,),
                        TextFormField(
+                        maxLength: 350,
                         initialValue: controller.condition,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                          hintText: 'In a much stable state',
+                          hintText: 'Example: Mention book name, author, condition, usage time, original price, selling price, and reason for selling."',
+                          hintMaxLines: 2,
                            border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide(color: Colors.lightBlue)

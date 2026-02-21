@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:studentswap/buyer/buyer_controller.dart';
+import 'package:studentswap/buyer/cart_screen.dart';
 import 'package:studentswap/profile/Profile_screen.dart';
 import 'package:studentswap/seller/Addproduct.dart';
 import 'package:studentswap/seller/seller_controller.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget{
     final WelcomeController controller = Get.find<WelcomeController>();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home:controller.getInitialScreen(),
+     home:controller.getInitialScreen(),
     );
   }
 }
