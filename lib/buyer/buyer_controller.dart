@@ -24,6 +24,7 @@ class BuyerController extends GetxController{
   var addedtocart = false.obs;
   var isScaffold = false.obs;
   RxInt selectedpage = 0.obs;
+  TextEditingController messageController = TextEditingController();
   final List<String> images = [
        'assets/assets/pd_1.jpeg',
        'assets/assets/pd_2.gif',
@@ -168,4 +169,41 @@ class BuyerController extends GetxController{
       print('Error removing product from cart');
     }
    }
+   String chatId ='';
+   Future<void> buyerchat(String sellerId,String productId) async{
+         List<String> ids = [user, sellerId];
+          ids.sort();
+
+          chatId = "${ids[0]}_${ids[1]}_$productId";
+
+          DocumentSnapshot snapshot =  await _firebase.collection('chats').doc(chatId).get();
+          if(!snapshot.exists){
+            await _firebase.collection('chats').doc(chatId).set({
+                'participants' : ids,   //chatscreen list generation
+                'productId' : productId, 
+                'lastMessage': '',
+                'lastMessageTime': FieldValue.serverTimestamp(),
+            });
+          }
+       }
+     Future<void> sendmessage() async{
+     if(messageController.text.isEmpty)return;
+     String text = messageController.text.trim();
+      try{
+        await _firebase.collection('chats').doc(chatId).collection('messages').add({
+          'senderId' : user,
+          'text' : text,
+          'timestamp' : FieldValue.serverTimestamp(),
+        }
+        );
+        await _firebase.collection('chats').doc(chatId).update({
+       'lastMessage': text,
+       'lastMessageTime': FieldValue.serverTimestamp(),
+  });
+        messageController.clear();  
+      }catch(e){
+        print("error inputing messages $e");
+      }
+   }
+
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:studentswap/buyer/cart_screen.dart';
+import 'package:studentswap/buyer/chat_screen.dart';
 
 import 'buyer_controller.dart';
 import 'package:flutter/material.dart'; 
@@ -327,7 +328,10 @@ class ItemDetailsScreen extends StatelessWidget{
                                       vertical: height * 0.018,
                                     ),
                           ),
-                            onPressed: (){}
+                            onPressed: () async{
+                             await controller.buyerchat(product.sellerId,product.id);
+                              Get.to(() => ChatScreen(profile: seller, product: product,chatId: controller.chatId,));
+                            }
                           , child: Text('Swap')),
                         )
                     ],

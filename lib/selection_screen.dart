@@ -27,7 +27,7 @@ class SelectionScreen  extends StatelessWidget{
               style: AppButtonStyle.outLinedButtonStyle(onpressing: selectionwlcm.isButtonActive(ActiveButton.Buyer)),
               onPressed: (){
                 selectionwlcm.setActiveButton(ActiveButton.Buyer);
-                Get.to(() => Bottomnavbuyer());
+                Get.offAll(() => Bottomnavbuyer());
               }, child: Text('Iam a Buyer',style: TextStyle(
                 fontSize: AppTextStyle.heading.fontSize,
                 color: selectionwlcm.isButtonActive(ActiveButton.Buyer) ? Colors.white : AppTextStyle.heading.color

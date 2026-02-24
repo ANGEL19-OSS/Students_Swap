@@ -11,7 +11,7 @@ class CartScreen extends StatelessWidget{
     final BuyerController controller = Get.find<BuyerController>();
     final size = MediaQuery.of(context).size;
 
-     final width = size.width;
+    final width = size.width;
     final height = size.height;
     return Scaffold(
       appBar: AppBar(   //after adding bottom navigation need to change the logic here 

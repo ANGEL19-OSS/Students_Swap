@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:studentswap/buyer/buyer_controller.dart';
+import 'package:studentswap/buyer/cart_screen.dart';
 import 'package:studentswap/buyer/item_details_screen.dart';
 import 'package:studentswap/seller/seller_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,14 +34,10 @@ class Buyerview extends StatelessWidget{
               return  Text("Welcome, ${snapshot.data}");
             }
         }),
-        actions: [
-          IconButton(onPressed: (){
-            controller.isScaffold.value = true;
-            const Profile();
-          }, icon: Icon(Icons.person))
-        ],
       ),
-   body: Column(
+   body:  
+   
+    Column(
      crossAxisAlignment: CrossAxisAlignment.start,
      children: [
        SizedBox(
