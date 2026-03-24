@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:studentswap/seller/chatlist_Screen.dart';
 import 'package:studentswap/seller/Addproduct.dart';
 import 'package:studentswap/seller/Profile.dart';
 import 'package:studentswap/seller/seller_controller.dart';
@@ -27,7 +28,12 @@ class Sellerview extends StatelessWidget{
             }else{
               return  Text("Hi, ${snapshot.data}");
             }
-          })
+          }),
+          actions: [
+            IconButton(onPressed: (){
+             Get.to(() => Chatlistscreen());
+            }, icon: Icon(Icons.message) )
+          ],
          ),
       body: Column(
         children: [

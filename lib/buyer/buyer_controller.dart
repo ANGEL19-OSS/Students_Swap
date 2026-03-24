@@ -180,13 +180,15 @@ class BuyerController extends GetxController{
           if(!snapshot.exists){
             await _firebase.collection('chats').doc(chatId).set({
                 'participants' : ids,   //chatscreen list generation
+                'buyerId' : user,
+                'sellerId' : sellerId,
                 'productId' : productId, 
                 'lastMessage': '',
                 'lastMessageTime': FieldValue.serverTimestamp(),
             });
           }
        }
-     Future<void> sendmessage() async{
+   /*  Future<void> sendmessage() async{
      if(messageController.text.isEmpty)return;
      String text = messageController.text.trim();
       try{
@@ -197,13 +199,13 @@ class BuyerController extends GetxController{
         }
         );
         await _firebase.collection('chats').doc(chatId).update({
-       'lastMessage': text,
+       'lastMessage': text,    //updating the recent text to lastmessage
        'lastMessageTime': FieldValue.serverTimestamp(),
   });
         messageController.clear();  
       }catch(e){
         print("error inputing messages $e");
       }
-   }
+   }*/
 
 }

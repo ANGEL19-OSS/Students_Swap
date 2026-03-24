@@ -329,8 +329,12 @@ class ItemDetailsScreen extends StatelessWidget{
                                     ),
                           ),
                             onPressed: () async{
+
                              await controller.buyerchat(product.sellerId,product.id);
-                              Get.to(() => ChatScreen(profile: seller, product: product,chatId: controller.chatId,));
+                              Get.to(() => ChatScreen(profile: seller, product: product,chatId: controller.chatId,
+                             currentUserId:  controller.user ,
+                              otherUserId: product.sellerId,
+                              ));
                             }
                           , child: Text('Swap')),
                         )

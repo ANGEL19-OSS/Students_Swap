@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:studentswap/buyer/buyer_controller.dart';
 import 'package:studentswap/buyer/buyerview.dart';
 import 'package:studentswap/buyer/cart_screen.dart';
+import 'package:studentswap/buyer/chat_screen.dart';
+import 'package:studentswap/buyer/chatlist_screen.dart';
 import 'package:studentswap/seller/Profile.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +15,7 @@ class Bottomnavbuyer extends StatelessWidget{
     final pages =[
     Buyerview(),
     CartScreen(),
+    ChatlistScreen(),
     Profile(),
     ];
     return Scaffold(
@@ -36,8 +39,8 @@ class Bottomnavbuyer extends StatelessWidget{
       children: [
         _navItem(Icons.home_rounded, 0),
         _navItem(Icons.shopping_cart_rounded, 1),
-        _navItem(Icons.person_rounded, 2),
-        _navItem(Icons.chat_rounded, 3),
+        _navItem(Icons.chat_rounded, 2),
+        _navItem(Icons.person_rounded, 3),
       ],
     ),
   );
@@ -59,7 +62,7 @@ Widget _navItem(IconData icon, int index) {
     case 1:
       return "Cart";
     case 2:
-      return "Char";
+      return "Chats";
     case 3:
     return "Profile";
     default:

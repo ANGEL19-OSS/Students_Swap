@@ -14,6 +14,7 @@ class ProfileController extends GetxController{
   var year = '';
   var ph_no ='';
   File? fileimage;
+  var upi_id ='';
 
 
   bool saveform(){
@@ -39,6 +40,7 @@ class ProfileController extends GetxController{
           'year' : year,
           'ph_no' : ph_no,
           'image' :fileimage?.path,
+          'upi_id' :upi_id
         }
       );
       return true;
@@ -51,6 +53,12 @@ class ProfileController extends GetxController{
   void resetform(){
     formkey.currentState!.reset();
   }
+  bool isValidUpi(String upi) {
+  final RegExp upiRegex =
+      RegExp(r'^[a-zA-Z0-9.\-_]{2,}@[a-zA-Z]{2,}$');
+
+  return upiRegex.hasMatch(upi);
+}
   void pickImage() async {
     final pickedimage = await  ImagePicker().pickImage(source: ImageSource.camera,maxWidth: 150,imageQuality: 50);
     if(pickedimage == null){

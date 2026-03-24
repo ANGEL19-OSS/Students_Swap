@@ -3,6 +3,8 @@ import 'package:studentswap/buyer/buyer_controller.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 
+import 'package:studentswap/buyer/payment_screen.dart';
+
 class CartScreen extends StatelessWidget{
   const CartScreen({super.key});
 
@@ -76,12 +78,7 @@ class CartScreen extends StatelessWidget{
                                      ),
                                     Row(                        
                                      children: [
-                                       TextButton(
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: Color(0xFF4CB6E6),
-                                          side: BorderSide( color: Colors.blue,width: 2)
-                                        ),
-                                        onPressed: (){}, child: Text('swap',style: TextStyle(color: Colors.white),)),
+                                       Text('swap',style: TextStyle(color: Colors.white),),
                                         IconButton(
                                    icon: Icon(Icons.delete, size: 18, color: Colors.red),
                                    onPressed: () {
@@ -121,7 +118,11 @@ class CartScreen extends StatelessWidget{
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ), ),               
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print('paymenttaped');
+
+                  Get.to(PaymentScreen(cartItems: controller.cartproducts, totalAmount: controller.totalPrice));  
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF4CB6E6)
                   ),

@@ -9,10 +9,13 @@ import '../models/ProfileModel.dart';
 import 'package:get/get.dart';
 
 class ChatScreen extends StatelessWidget{
-  const ChatScreen({super.key,required this.profile, required this.product, required this.chatId});
+  const ChatScreen({super.key,required this.profile, required this.product, required this.chatId,  required this.currentUserId,
+  this.otherUserId});
   final Profile? profile;
   final Product product;
   final String chatId;
+  final String? currentUserId;
+final String? otherUserId;
   @override
   Widget build(BuildContext context){
     final BuyerController controller = Get.find<BuyerController>();
@@ -22,7 +25,9 @@ class ChatScreen extends StatelessWidget{
     }
     return Scaffold(
        appBar: AppBar(
-        leading: Icon(Icons.arrow_back,color:Colors.black),
+        leading: IconButton(onPressed: (){
+          Get.back();
+        }, icon: Icon(Icons.arrow_back, color: Colors.black,)),
         title: Text('Messages'),
         actions: [
           CircleAvatar(
@@ -73,16 +78,16 @@ class ChatScreen extends StatelessWidget{
                 }
                 var messages = snapshot.data!.docs;
                 return ListView.builder(
-                  reverse: false, //enable reverse scrolling
+                  reverse: true, //enable reverse scrolling
                   itemCount: messages.length,
                   itemBuilder: (context, index){
                   var mes = messages[index];
-                   bool isMe = mes['senderId'] == controller.user;
+                   bool isMe = mes['senderId'] == currentUserId;
              
                    return Align(
                     alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
                      child: Container(
-                padding: EdgeInsets.all(10),
+                 padding: EdgeInsets.all(10),
                 margin: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                 decoration: BoxDecoration(
                   color: isMe ? Colors.blue : Colors.white,
@@ -118,9 +123,34 @@ class ChatScreen extends StatelessWidget{
                         ),
                        ),
                      ),
-                     IconButton(onPressed:(){
-                     controller.sendmessage();
-                     } , icon: Icon(Icons.send))
+                     IconButton(
+               onPressed: () async {
+                  if (controller.messageController.text.trim().isEmpty) return;
+
+                    String text = controller.messageController.text.trim();
+ 
+                         await FirebaseFirestore.instance
+                   .collection('chats')
+                    .doc(chatId)
+                     .collection('messages')
+                        .add({
+                       'text': text,
+                      'senderId': currentUserId,
+                        'timestamp': FieldValue.serverTimestamp(),
+                        });
+
+                    await FirebaseFirestore.instance
+                   .collection('chats')
+                  .doc(chatId)
+                  .update({
+                  'lastMessage': text,
+                  'lastMessageTime': FieldValue.serverTimestamp(),
+                 });
+
+                   controller.messageController.clear();
+             },
+               icon: Icon(Icons.send),
+) ,
                 ],
               ),
             )

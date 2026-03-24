@@ -170,6 +170,21 @@ class ProfileScreen extends StatelessWidget{
                 onSaved: (value){
                  profileController.ph_no =value!;
                 }),
+                SizedBox(height: 15,),
+                showbox('UPI Id', Icons.payment, TextInputType.text,
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return 'Enter a valid upi id';
+                  }
+                    if (!profileController.isValidUpi(value.trim())) {
+                    return "Enter valid UPI ID (example@bank)";
+                    }
+                   return null;               
+                },
+                onSaved: (value){
+                  profileController.upi_id = value!;
+                }
+                )
                 ],
                ),
              ),
