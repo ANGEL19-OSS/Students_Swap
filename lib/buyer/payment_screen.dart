@@ -65,7 +65,7 @@ class PaymentScreen extends StatelessWidget {
                             String sellerName =
                                 seller['name'];
                             String? upiId = seller['upi_id'];
-                            print('upiId is ${upiId}');   
+                            print('upiId is ${upiId} ${sellerName}');   
 
                             return Card(
                              color: Color(0xFF4CB6E6),
@@ -95,7 +95,10 @@ class PaymentScreen extends StatelessWidget {
                                         "Total: ₹$sellerTotal",style: TextStyle(color: Colors.white),),
                                     const SizedBox(
                                         height: 10),
-                                    if (upiId != null &&
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                             if (upiId != null &&
                                         upiId.isNotEmpty)
                                       ElevatedButton(
                                         onPressed: () {
@@ -124,16 +127,21 @@ class PaymentScreen extends StatelessWidget {
                                                           () =>
                                                               Navigator.pop(
                                                                   context),
-                                                      child:
+                                                          child:
                                                           const Text(
                                                               "No"),
                                                     ),
                                                     ElevatedButton(
+                                                     style: ElevatedButton.styleFrom(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.circular(12)
+                                                        )
+                                                     ),
                                                       onPressed:
                                                           () async {
+
                                                         Navigator.pop(
                                                             context);
-
                                                         await controller.createOrderForSeller(
                                                           sellerId:
                                                               sellerId,
@@ -149,7 +157,7 @@ class PaymentScreen extends StatelessWidget {
 
                                                         Get.off(
                                                             () =>
-                                                                const OrderSuccessScreen());
+                                                            const OrderSuccessScreen());
                                                       },
                                                       child:
                                                           const Text(
@@ -189,6 +197,8 @@ class PaymentScreen extends StatelessWidget {
                                       child: const Text(
                                           "Cash on Delivery"),
                                     ),
+                                            ],
+                                        )
                                   ],
                                 ),
                               ),

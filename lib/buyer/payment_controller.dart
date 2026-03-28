@@ -12,7 +12,6 @@ class PaymentController extends GetxController {
 
   var isLoading = false.obs;
 
-  // 🔹 GROUP CART BY SELLER
   Map<String, List<CartModel>> groupCartBySeller(
       List<CartModel> cartItems) {
     Map<String, List<CartModel>> map = {};
@@ -40,16 +39,27 @@ class PaymentController extends GetxController {
     return {...userdata , ...profdata};
   }
 
-  // 🔹 LAUNCH UPI
   Future<void> launchUPI({
     required String upiId,
     required String sellerName,
     required int amount,
     required Function onSuccess,
   }) async {
+   
+   final String upiString = 
+  "upi://pay"
+  "?pa=${upiId.trim()}"
+  "&pn=${Uri.encodeComponent(sellerName.trim())}"
+  "&am=${amount}.00"
+  "&cu=INR"
+  "&tn=StudentSwap%20Order";
 
-    final Uri upiUri = Uri.parse(
-        "upi://pay?pa=$upiId&pn=$sellerName&am=$amount.00&cu=INR&tn=StudentSwap Order");
+final Uri upiUri = Uri.parse(upiString);
+  
+   print('RAW upiId: "$upiId"');
+print('RAW sellerName: "$sellerName"');
+print('RAW amount: $amount');
+print('Final URI: $upiUri');
 
       try {
     final launched = await launchUrl(
@@ -66,7 +76,6 @@ class PaymentController extends GetxController {
   }
   }
 
-  // 🔹 CREATE ORDER FOR ONE SELLER
   Future<void> createOrderForSeller({
     required String sellerId,
     required List<CartModel> sellerItems,

@@ -88,8 +88,8 @@ final String? otherUserId;
                     alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
                      child: Container(
                  padding: EdgeInsets.all(10),
-                margin: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
-                decoration: BoxDecoration(
+                 margin: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                 decoration: BoxDecoration(
                   color: isMe ? Colors.blue : Colors.white,
                   borderRadius: BorderRadius.circular(12),
                 ),

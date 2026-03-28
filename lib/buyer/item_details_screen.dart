@@ -329,7 +329,6 @@ class ItemDetailsScreen extends StatelessWidget{
                                     ),
                           ),
                             onPressed: () async{
-
                              await controller.buyerchat(product.sellerId,product.id);
                               Get.to(() => ChatScreen(profile: seller, product: product,chatId: controller.chatId,
                              currentUserId:  controller.user ,
@@ -341,7 +340,7 @@ class ItemDetailsScreen extends StatelessWidget{
                     ],
                   ),
                 ),
-            ]
+             ]
            ),
            
         ),
